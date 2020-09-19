@@ -9,11 +9,11 @@ description_api_url = endpoint + "/vision/v2.0/describe" # "/text/analytics/v3.0
 sentiment_api_url = endpoint + "/text/analytics/v2.0/sentiment"
 headers = {"Ocp-Apim-Subscription-Key": subscription_key}
 
-def describe_image(image_url="http://www.public-domain-photos.com/free-stock-photos-4/travel/san-francisco/golden-gate-bridge-in-san-francisco.jpg"):
+def describe_image(image_url):
     # https://docs.microsoft.com/en-us/rest/api/cognitiveservices/computervision/describeimage/describeimage
     response = requests.post(description_api_url, headers=headers, json={'url': image_url})
     return_val = response.json()
-    assert type(return_val) is str
+    return_val = ". ".join([x["text"] for x in return_val["description"]["captions"]])
     return return_val
 
 def sentiment_analysis(sentences, lang="en"):
@@ -36,6 +36,11 @@ def sentiment_analysis(sentences, lang="en"):
 
     return_val = [doc["score"] for doc in response["documents"]]
     return return_val
+
+def test_describe_image():
+    url = "http://www.public-domain-photos.com/free-stock-photos-4/travel/san-francisco/golden-gate-bridge-in-san-francisco.jpg"
+    r = describe_image(url)
+    print(r)
 
 def test_sentiment_analysis():
     r = sentiment_analysis(["You are stupid", "I hate my life", "I love my life"])
