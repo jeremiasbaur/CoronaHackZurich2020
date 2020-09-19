@@ -121,7 +121,8 @@ function update() {
   // display Tweets
   filteredTweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
   if (keywords !== "") {
-    filteredTweets = filteredTweets.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
+    const keywordArray = keywords.split(',').filter(keyword => keyword !== "");
+    filteredTweets = filteredTweets.filter(tweet => keywordArray.some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
   }
 
   function computeSentimentColor(sentiment) {
