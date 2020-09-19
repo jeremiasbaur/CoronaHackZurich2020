@@ -1,4 +1,7 @@
 from datetime import datetime
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
 from app import db
 
 class Tiles(db.Model):
@@ -21,3 +24,39 @@ class Tile_density(db.Model):
     
     def __repr__(self):
         return '<Tile Density information {} on {}>'.format(self.tileId, self.tileDate)
+
+class ChartSong(db.Model):
+    __tablename__ = "chart_song"
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    position = db.Column(db.Integer)
+
+    trackId = db.Column(db.String(30))
+    countryCode = db.Column(db.String(5))
+
+    spotifySongId = db.Column(db.Integer, ForeignKey('spotify_song.id'))
+    spotifySong = db.relationship("SpotifySong", back_populates="chartSong")
+
+class SpotifySong(db.Model):
+    __tablename__ = "spotify_song"
+    id = db.Column(db.Integer, primary_key=True)
+    #general info
+    title = db.Column(db.String(100))
+    artist = db.Column(db.String(100))
+    trackId = db.Column(db.String(30))
+    spotifyUrl = db.Column(db.String(100))
+
+    # audio features
+    danceability = db.Column(db.Float)
+    energy = db.Column(db.Float)
+    loudness = db.Column(db.Float)
+    acousticness = db.Column(db.Float)
+    speechiness = db.Column(db.Float)
+    instrumentalness = db.Column(db.Float)
+    liveness = db.Column(db.Float)
+    valence = db.Column(db.Float)
+    tempo = db.Column(db.Float)
+    duration_ms = db.Column(db.Integer)
+
+    #relationship
+    chartSong = db.relationship("ChartSong", back_populates="spotifySong")
