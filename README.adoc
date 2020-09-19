@@ -95,22 +95,15 @@ The interactive map on the frontend was built using https://d3js.org/[d3].
 We encountered many challenges - tiredness, anger, war, famines - and most of all our own ego.
 We were able to handle everything life threw at us by taking a deep breath and remembering the body movement exercise from migros at the opening ceremony.  
 
-== Accomplishment
+== Contributions
 
-- coming up with combining different data sources which is a surely innovative and useful method
+We propose the usage of different data sources for trend and sentiment analysis in a society.
+We demonstrate the effectiveness this approach has for this task.
 
 == Whats next?
 
-- Measure the correct proportions each data source should have
-- add more data sources like other social networks (e.g. Instagram)
+Add more data sources to the pipeline - for example Swisscom and YouTube as discussed before.
 
 == Build with
 
-- Python
-- Azure (thanks Microsoft)
-- Cutting edge web technologies
-
-== How to run
-Set these environment variables to work with `azure.py` (values posted in Slack):
-- "AZURE_KEY"
-- "AZURE_ENDPOINT"
+Time, sweath and computers
