@@ -70,7 +70,7 @@ class Tweet(db.Model):
     coordY = db.Column(db.String(40))
     tweetUrl = db.Column(db.String(255))
     language = db.Column(db.String(10))
-    uid = db.String(db.String(50))
+    uid = db.Column(db.String(50))
 
 class SwitzerlandPopulation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
