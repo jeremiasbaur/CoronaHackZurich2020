@@ -50,20 +50,38 @@ map.call(zoom);
 // later)
 var proj = d3.geo.mercator();
 
-const density_data = JSON.parse(document.currentScript.getAttribute('density_data'));//.slice(0, 100000);
+// const density_data = JSON.parse(document.currentScript.getAttribute('density_data'));//.slice(0, 100000);
+//
+// map
+//     .selectAll("myCircles")
+//     .data(density_data)
+//     .enter()
+//     .append("circle")
+//     .attr("cx", function(d){ return proj([d[0], d[1]])[0] })
+//     .attr("cy", function(d){ return proj([d[0], d[1]])[1] })
+//     .attr("r", 14)
+//     .style("fill", "69b3a2")
+//     .attr("stroke", "#69b3a2")
+//     .attr("stroke-width", 3)
+//     .attr("fill-opacity", .4)
 
-map
+// display twitter data
+d3.json("static/twitter.json", function(twitter) {
+  twitter = twitter.filter(tweet => tweet.coordinates);
+
+  map
     .selectAll("myCircles")
-    .data(density_data)
+    .data(twitter)
     .enter()
     .append("circle")
-    .attr("cx", function(d){ return proj([d[0], d[1]])[0] })
-    .attr("cy", function(d){ return proj([d[0], d[1]])[1] })
+    .attr("cx", function(d){ return proj(d.coordinates.coordinates)[0] })
+    .attr("cy", function(d){ return proj(d.coordinates.coordinates)[1] })
     .attr("r", 14)
     .style("fill", "69b3a2")
     .attr("stroke", "#69b3a2")
     .attr("stroke-width", 3)
     .attr("fill-opacity", .4)
+});
 
 // Prepare the cartogram
 var topology,
