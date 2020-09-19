@@ -7,6 +7,17 @@ Set these environment variables to work with `azure.py` (values posted in Slack)
 
 ## Pitch
 ### Inspiration
-To find out how the society feels at a certain moment in time is of great interest for many - from policy makers that want to support their people where it matters over social entrepreneurs that want to improve the welfare of the society to reporters that want to cover the most important topics to have an impact.
-But the usual sources of this emontional data often suffer from being highly biased and only look at subset of groups within the society, not at the society as a whole.
- 
+To find out how the society feels at a certain moment in time is of great interest for many - from policy makers that want to support their people where it matters over social entrepreneurs that want to improve the welfare of the society to reporters that want to cover the most important topics and have a positive impact.
+But the usual sources of this emontional data often suffer from being highly biased - it only covers a subset of groups within the society, not at the society as a whole.
+
+The topics that concern society the most and the impact of these topics on people's emotions are often found out from singular and limited sources like the frequency of certain Hashtags on Twitter in a certain timespan.
+These data streams are typically dominated by technological knowledgeable, educated, adult men and women.
+It is obvious that this is not an accurate cross-section of a society as it does not include children, old people and people that enjoyed less education.
+These groups amount much larger numbers of people than the clientele of Twitter and are often affected by entirely different issues.
+
+Another method of sentiment testing is by randomly questioning people in the buzzing downtowns of cities.
+But this method also faces the same issue: Only the sentiment of certain groups of people (here the young (physically or mentally), urban upper middle class) is captured. 
+
+Therefore the big challenge is: **How can we find out the accurate state of the emotional well-being of the whole cross-section of society without selecting for certain groups?** 
+
+### Our solution
