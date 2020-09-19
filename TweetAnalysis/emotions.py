@@ -70,7 +70,7 @@ def test_sentiment_analysis():
             if (i>start+8): break
     
     print(sum([len(i) for i in texts])/len(texts))
-
+    texts=["Fuckin round, actin brand new"]
     r = sentiment_analysis(texts)
     for i, results in enumerate(r):
         print(f'{i}\t{results}\tText: {texts[i]}')
