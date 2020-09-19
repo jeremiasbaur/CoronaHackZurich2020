@@ -37,23 +37,18 @@ var proj = d3.geo.mercator();
 // Prepare the cartogram
 var topology,
     geometries,
-    dataById = {},
     carto = d3.cartogram()
         .projection(proj);
 
-// Define the fields of the data
-var fields = [
-      {name: "(no scale)", id: "none"},
-      {name: "Number of tweets", id: "tweets_total", key: "%d"}
-    ],
-    day = 10;
+var day = 10,
+    tweets = [],
+    keywords = "";
 
 // D3's "change" event is somehow not triggered when selecting the
 // dropdown value programmatically. Use jQuery's change event instead.
 $('#day').on("change", function(e) {
   // On change, update the URL hash
   day = parseInt(this.value);
-  console.log(day);
   update();
 });
 
@@ -112,57 +107,57 @@ function init() {
       .attr("d", path);
 }
 
+// load tweets only once
+d3.json("static/cleaned_tweets_en.json", function(t1) {
+  tweets.push(...t1);
+  d3.json("static/cleaned_tweets_de.json", function(t2) {
+    tweets.push(...t2);
+  })
+});
+
 update();
-keywords = "";
+
 function update() {
-  // load and display Tweets
-  d3.json("static/cleaned_tweets_en.json", function(t1) {
-    var tweets = []
-    tweets.push(...t1);
-    d3.json("static/cleaned_tweets_de.json", function(t2) {
-      tweets.push(...t2);
-      tweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
-      console.log(tweets)
+  // display Tweets
+  filteredTweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
+  if (keywords !== "") {
+    filteredTweets = filteredTweets.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
+  }
 
-      if (keywords !== "") {
-        tweets = tweets.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
-      }
+  function computeSentimentColor(sentiment) {
+    if (sentiment > 0) {
+      return "rgb(" + (1 - sentiment) * 255 + ", 255 , 0)";
+    } else {
+      return "rgb(255, " + (1 + sentiment) * 255 + ", 0)";
+    }
+  }
 
-      function computeSentimentColor(sentiment) {
-        if (sentiment > 0) {
-          return "rgb(" + (1 - sentiment) * 255 + ", 255 , 0)";
-        } else {
-          return "rgb(255, "  + (1 + sentiment) * 255 + ", 0)";
-        }
-      }
+  map.selectAll("circle")
+      .remove();
 
-      map.selectAll("circle")
-          .remove();
+  const bubbles = map.selectAll("myCircles")
+      .data(filteredTweets)
+      .enter()
+      .append("circle")
+      .attr("cx", function (d) {
+        return proj([d.coords[1], d.coords[0]])[0]
+      })
+      .attr("cy", function (d) {
+        return proj([d.coords[1], d.coords[0]])[1]
+      })
+      .attr("r", 7)
+      .style("fill", function (d) {
+        return computeSentimentColor(d.score)
+      })
+      .attr("stroke", "#777777")
+      .attr("stroke-width", 1)
+      .attr("fill-opacity", 0.5);
 
-      const bubbles = map.selectAll("myCircles")
-          .data(tweets)
-          .enter()
-          .append("circle")
-          .attr("cx", function (d) {
-            return proj([d.coords[1], d.coords[0]])[0]
-          })
-          .attr("cy", function (d) {
-            return proj([d.coords[1], d.coords[0]])[1]
-          })
-          .attr("r", 7)
-          .style("fill", function (d) {
-            return computeSentimentColor(d.score)
-          })
-          .attr("stroke", "#777777")
-          .attr("stroke-width", 1)
-          .attr("fill-opacity", 0.5);
-
-      // Show tooltips when hovering over the features
-      // Use "mousemove" instead of "mouseover" to update the tooltip
-      // position when moving the cursor inside the feature.
-      bubbles.on('mousemove', showTooltip)
-          .on('mouseout', hideTooltip);
-    })});
+  // Show tooltips when hovering over the features
+  // Use "mousemove" instead of "mouseover" to update the tooltip
+  // position when moving the cursor inside the feature.
+  bubbles.on('mousemove', showTooltip)
+      .on('mouseout', hideTooltip);
 }
 
 /**
