@@ -66,7 +66,7 @@ class Tweet(db.Model):
     text = db.Column(db.String(500)) 
     date = db.Column(db.DateTime)
     score = db.Column(db.Float) 
-    user = db.String(db.String(50))
+    user_id = db.String(db.String(50))
     coordX = db.Column(db.String(40))
     coordY = db.Column(db.String(40))
     tweetUrl = db.Column(db.String(255))
