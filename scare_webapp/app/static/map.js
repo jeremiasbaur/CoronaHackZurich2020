@@ -297,7 +297,7 @@ function update() {
         .style("fill", function(d) { return computeSentimentColor(d.score)} )
         //.attr("stroke", "#69b3a2")
         .attr("stroke-width", 1)
-        .attr("fill-opacity", 0.3);
+        .attr("fill-opacity", 0.5);
   });
 
   // Prepare the values and determine minimum and maximum values
