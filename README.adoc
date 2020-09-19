@@ -24,7 +24,7 @@ We identified several important data sources, each representing a different demo
 Each of those data sources can give us very intimate insight about the emotional state of the corresponding group.
 
 |===
-| Name | Demographic
+| Data Source | Covered Demographics
 
 | Spotify | children to middle-aged adults from all social classes
 | Twitter | middle-aged people from all social classes
@@ -45,8 +45,13 @@ Therefore we conclude that Spotify charts, due to Spotify's wide usage, offer on
 
 === Twitter
 
-- Demographic: middle-aged educated urban people
-- Modern AI allows high quality sentiment extraction of tweets
+Twitter is one of most well-known and largest footnote:[https://makeawebsitehub.com/social-media-sites/] social networks, not only but also becaues of the enthusiasm with which the current american persident uses it.
+It has a long history of being used for trend recognition - both in an academic footnote:[Example: https://www.kth.se/social/files/58878811f276540810b9ee1a/SB%C3%A4ckstr%C3%B6m_JFHaslum.pdf] and medial setting.
+The big advantage of Twitter is that it - unlike its big competitors - provides a generous API and location data.
+However, as discussed in the introduction, one should be seduced to use Twitter as the sole data source to recognize trends in a society as its demographic is not diverse enough to mirror a whole society.
+Only one third of Twitter users are female and 80% of them are affluent millenials.footnote:[https://www.omnicoreagency.com/twitter-statistics/]
+There is however no reason not to use Twitter data as part of a bigger system.
+Using Twitter in addition to other indicators proves to be stable and provides valuable sentiments.
 
 === Future work: SwissCom
 
