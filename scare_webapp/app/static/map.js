@@ -46,7 +46,7 @@ var day = 10,
 
 // D3's "change" event is somehow not triggered when selecting the
 // dropdown value programmatically. Use jQuery's change event instead.
-$('#day').on("change", function(e) {
+$('#day').on("input", function(e) {
   // On change, update the URL hash
   day = parseInt(this.value);
   update();
