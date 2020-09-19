@@ -2,13 +2,14 @@ import requests
 import csv
 import json
 import time
+import os
 from datetime import datetime
 
 from bs4 import BeautifulSoup
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from matplotlib import pyplot as plt
 
-api_key = '35d1d908b96d4f3dc113e038eca30b53'
+api_key = os.environ["MIXER_KEY"]
 
 if __name__=='__main__':
     songs = {}
