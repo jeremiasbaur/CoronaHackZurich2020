@@ -71,6 +71,7 @@ class Tweet(db.Model):
     tweetUrl = db.Column(db.String(255))
     language = db.Column(db.String(10))
     uid = db.Column(db.String(50))
+    username = db.Column(db.String(100))
 
 class SwitzerlandPopulation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
