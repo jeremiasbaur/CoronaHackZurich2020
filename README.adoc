@@ -20,19 +20,32 @@ Therefore the big challenge is: *How can we find out the accurate state of the e
 The problem is that using only one data source leads to results that doesn't represent the whole of society well.
 We believe that combining several data sources in a proportional manner, each being dominated by certain demographics and groups, can give an accurate view of how the whole of society thinks and feels.
 
-We identified several data sources, each representing a different demographics.
+We identified several important data sources, each representing a different demographics.
+Each of those data sources can give us very intimate about the corresponding group.
+
+=== Spotify
+
+- Demographic: young people of all social classes
+- PhD thesis by Tristan Jehan (Spotify guy) shows that songs tell us something about the emotions of people
+
+=== Twitter
+
+- Demographic: middle-aged educated urban people
+- Modern AI allows high quality sentiment extraction of tweets
+
+=== Future work: SwissCom
+
+- SwissCom can provide location data of mobile
+- This data can then be used to use the entropy of the average density of SIM cards in a region - especially during the corona time this tells us something about the behavior and thus the state of people
+- can 'catch' people that would otherwise escape our analysis
+
+=== Future work: YouTube
+
+- Demographic: nearly everyone
+- TODO: find some source why this is useful
+- maybe people watch more "negative" videos if they are more scared?
+- possibly a very rich dataset - the demographic can possibly determined by the video title / content / author and topic tells us about emotion
  
-Only summary right now, will write full sentences later
-
-* Problem: singular data source -> doesnt reflect whole society very well
-* use several (also uncommon) data sources and combine them
-* data source:
-** Spotify
-** SwissCom data
-** Twitter
-** Maybe news or something
-* Argue that each of these data sources reflect a different group of society (but that very well), and if you do weighted averaging of them in the right fashion (according to the proportions of the corresponding groups in society), you can get a much more accurate scare level than with only news data or whatever
-
 == How we build it
 
 - Use Azure for fancy scientify background analytics stuff ( ;) )
