@@ -110,15 +110,18 @@ if __name__=='__main__':
             
             if len(song_data[line[5]])<3: continue
             if date in chart_data:
-                chart_data[date].append(song_data[line[5]][2]*int(line[3]))
+                chart_data[date].append(song_data[line[5]][2])
             else:
-                chart_data[date] = [song_data[line[5]][2]*int(line[3])]
+                chart_data[date] = [song_data[line[5]][2]]
 
 
     chart = []
     for k, v in chart_data.items():
         print(k, sum(v)/len(v))
-        chart.append((sum(v)/len(v), k))
+        chart.append((sum(v)/len(v), k.__str__()))
+    
+    with open('TweetAnalysis/chart_sentiment.json', 'w') as f:
+        f.write(json.dumps(chart))
 
     plt.plot([i[1] for i in chart], [i[0] for i in chart])
     plt.show()

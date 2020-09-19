@@ -1,4 +1,4 @@
-from app import app, db, crontab
+"""from app import app, db, crontab
 
 import tweepy
 import os
@@ -38,4 +38,4 @@ def tweet_query():
 
 
 if __name__=='__main__':
-    tweet_query()
+    tweet_query()"""

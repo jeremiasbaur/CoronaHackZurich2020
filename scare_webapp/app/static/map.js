@@ -8,6 +8,10 @@ if (!document.createElementNS) {
   document.getElementsByTagName("form")[0].style.display = "none";
 }
 
+var form = document.forms["keywordForm"]
+function handleForm(event) { event.preventDefault(); } 
+form.addEventListener('submit', handleForm);
+
 // Define the colors with colorbrewer
 var colors = colorbrewer.RdYlBu[3]
     .reverse()
