@@ -169,14 +169,14 @@ window.onhashchange = function() {
 };
 
 // Read the geometry data
-d3.json("ch_cantons.topojson", function(topo) {
+d3.json("static/ch_cantons.topojson", function(topo) {
   topology = topo;
 
   // The mapped unit for cantons: Cantons
   geometries = topology.objects.cantons.geometries;
 
   // Read the data for the cartogram
-  d3.csv("ch_population.csv", function(data) {
+  d3.csv("static/ch_population.csv", function(data) {
 
     // Prepare a function to easily access the data by its ID
     // "ID" for cantons: KTNR
