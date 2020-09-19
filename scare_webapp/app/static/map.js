@@ -178,17 +178,16 @@ function update() {
     // console.log(new Date(twitter[0].date).getDate())
     //twitter = twitter.filter(tweet => new Date(tweet.date).getMinutes() === parseInt(currentKey))
     //twitter = twitter.filter(tweet => tweet.score < -0.8);
-    console.log(keywords)
     twitter = twitter.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
-    console.log(twitter)
-    // map
-    //     .selectAll("myCircles")
-    //     .remove();
 
     function computeSentimentColor(sentiment) {
       sentiment = (sentiment + 1) / 2;
       return "rgb(" + (1 - sentiment) * 255 + ", " + sentiment * 255 + ", 0)";
     }
+
+    map
+        .selectAll("circle")
+        .remove();
 
     map
         .selectAll("myCircles")
