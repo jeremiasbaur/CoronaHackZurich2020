@@ -75,11 +75,20 @@ Academic research shows that the current state of emotions of individuals dictat
 Thanks to the YouTube API and other tools such as https://socialblade.com/youtube/[socialblade], using this data for sentiment analysis is indeed possible.
 However, this requires extensive preprocessing as the sentiment of each video must be analyzed, which is not a trivial task.
  
-== How we build it
+== How we built it
 
-- Use Azure for fancy scientify background analytics stuff ( ;) )
-- Server uses the lighweight and efficient Flask
-- Twitter API and special data from SwissCom
+The architecture can be separated into three parts: Datamining, Backend and Frontend.
+
+The datamining is done with Python. 
+The Spotify API is accessed with `spotipy`. 
+The Spotify charts are scraped from https://spotifycharts.com/regional.
+The sentiment of the songs is determined according to their valency.
+https://github.com/cjhutto/vaderSentiment[`VADER sentiment`], a high quality academic sentiment analysis library is used to analyze if a Tweet is positive or negative.
+The prepared data is stored in databases on Microsoft Azure.
+
+The server uses flask.
+
+The interactive map on the frontend was built using https://d3js.org/[d3].
 
 == Challenges
 
