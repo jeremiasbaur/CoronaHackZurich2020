@@ -32,9 +32,10 @@ def keywordTweets(keywords, tweet):
         date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
 
         scores[date.weekday()].append(analyser.polarity_scores(tweet['full_text'])['compound'])
-
+        
         users.add(tweet['user']['id'])
-        if (set(keywords) & set(tweet['full_text'].split()) or set([i['text'] for i in tweet['entities']['hashtags']]) & set(keywords)):
+        keyword_set = set([i.lower() for i in keywords])
+        if (keyword_set & set(tweet['full_text'].lower().split()) or set([i['text'].lower() for i in tweet['entities']['hashtags']]) & keyword_set):
             count+=1
 
             coords=coordGetter(tweet)
@@ -66,9 +67,12 @@ if __name__=='__main__':
     for i in range(7):
         scores.append([])
 
+    corona = ["corona", "covid", "covid", "COVID", "BAG", "Fälle", "Fallzahlen", "cases", "infection",'maskenpflicht','stayhomestaysafe','stayhome','distancing','covidiots']
+    abstimmung = ["kampfjets",'armee','begrenzungsinitiative','svp','srf','initiative','abstimmung','streik']
 
-    cleaned_tweets = keywordTweets( ["corona", "covid", "Covid", "Corona", "COVID", "BAG", "Fälle", "Fallzahlen", "cases", "infection"], tweets)
+    cleaned_tweets = keywordTweets(abstimmung , tweets)
 
+    print(cleaned_tweets)
 
     for i, data in enumerate(scores):
         overall = sum(data)
