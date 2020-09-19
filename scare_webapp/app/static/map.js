@@ -53,7 +53,7 @@ $('#day').on("change", function(e) {
 });
 
 d3.select("#keywords")
-  .on("change", function(e) {
+  .on("input", function(e) {
   // On change, update the URL hash
   keywords = this.value;
   update();
