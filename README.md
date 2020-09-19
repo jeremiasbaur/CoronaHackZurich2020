@@ -21,3 +21,41 @@ But this method also faces the same issue: Only the sentiment of certain groups 
 Therefore the big challenge is: **How can we find out the accurate state of the emotional well-being of the whole cross-section of society without selecting for certain groups?** 
 
 ### Our solution
+
+Only summary right now, will write full sentences later
+
+- Problem: singular data source -> doesnt reflect whole society very well
+- use several (also uncommon) data sources and combine them
+- data source:
+    - Spotify
+    - SwissCom data
+    - Twitter
+    - Maybe news or something
+- Argue that each of these data sources reflect a different group of society (but that very well), and if you do weighted averaging of them in the right fashion (according to the proportions of the corresponding groups in society), you can get a much more accurate scare level than with only news data or whatever
+
+### How we build it
+
+- Use Azure for fancy scientify background analytics stuff ( ;) )
+- Server uses the lighweight and efficient Flask
+- Twitter API and special data from SwissCom
+
+### Challenges
+
+- Twitter API is a nightmare
+- Presentating all the data is a UX challenge which we of course mastered perfectly
+
+### Accomplishment
+
+- coming up with combining different data sources which is a surely innovative and useful method
+
+
+### Whats next?
+
+- Measure the correct proportions each data source should have
+- add more data sources like other social networks (e.g. Instagram)
+
+### Build with
+
+- Python
+- Azure (thanks Microsoft)
+- Cutting edge web technologies
