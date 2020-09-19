@@ -28,3 +28,6 @@ ch_population.csv
 
 # playground
 playground/
+
+# config file
+scare_webapp/config.py
