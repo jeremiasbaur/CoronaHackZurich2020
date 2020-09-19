@@ -1,4 +1,4 @@
-= Echmotion
+= Chemotion
 :toc:
 
 == Inspiration
@@ -22,6 +22,14 @@ We believe that combining several data sources in a proportional manner, each be
 
 We identified several important data sources, each representing a different demographics.
 Each of those data sources can give us very intimate about the corresponding group.
+
+== Summary
+| Name | Demographic |
+|---
+| Spotify | children to middle-aged adults from all social classes |
+| Twitter | middle-aged people from all social classes |
+| mobile phone data | nearly all age groups across all social classes |
+| YouTube | nearly all age groups across all social classes |
 
 === Spotify
 
