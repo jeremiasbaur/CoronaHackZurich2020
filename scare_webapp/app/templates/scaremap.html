@@ -2,7 +2,13 @@
 
 {% block content %}
     {% if density_data%}
-    	{{ density_data }}
+    	{% for each in density_data%}
+    	{{ each.date }} 
+    	{{ each.llx }} 
+    	{{ each.lly }}
+    	{{ each.value }}
+    	<br>
+    	{% endfor %}
 	    <div>
 	    	<div id="graphic" class="graphic">
 	    		

@@ -1,2 +1,2 @@
-FLASK_APP=scareapp.py
+FLASK_APP=scare_app.py
 FLASK_ENV=development
