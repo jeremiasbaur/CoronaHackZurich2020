@@ -25,7 +25,7 @@ class Tile_density(db.Model):
     def __repr__(self):
         return '<Tile Density information {} on {}>'.format(self.tileId, self.tileDate)
 
-class ChartSong(db.model):
+class ChartSong(db.Model):
     __tablename__ = "chart_song"
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date)
@@ -34,10 +34,10 @@ class ChartSong(db.model):
     trackId = db.Column(db.String(30))
     countryCode = db.Column(db.String(5))
 
-    spotifySongId = Column(Integer, ForeignKey('spotify_song.id'))
-    spotifySong = relationship("SpotifySong", back_populates="chart_song")
+    spotifySongId = db.Column(db.Integer, ForeignKey('spotify_song.id'))
+    spotifySong = db.relationship("SpotifySong", back_populates="chartSong")
 
-class SpotifySong(db.model):
+class SpotifySong(db.Model):
     __tablename__ = "spotify_song"
     id = db.Column(db.Integer, primary_key=True)
     #general info
@@ -59,4 +59,4 @@ class SpotifySong(db.model):
     duration_ms = db.Column(db.Integer)
 
     #relationship
-    chart_data = relationship("ChartSong", back_populates="chart_song")
+    chartSong = db.relationship("ChartSong", back_populates="spotifySong")
