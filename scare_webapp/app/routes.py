@@ -21,7 +21,7 @@ def scaremap():
     density = [{
         "llx" : each[0].llx,
         "lly" : each[0].lly,
-        "date" : each[1].tileId,
+        "date" : each[1].tileDate,
         "value" : each[1].density
     } for each in density]
     return render_template("scaremap.html", density_data=density)
