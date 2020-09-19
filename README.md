@@ -15,4 +15,9 @@ These data streams are typically dominated by technological knowledgeable, educa
 It is obvious that this is not an accurate cross-section of a society as it does not include children, old people and people that enjoyed less education.
 These groups amount much larger numbers of people than the clientele of Twitter and are often affected by entirely different issues.
 
+Another method of sentiment testing is by randomly questioning people in the buzzing downtowns of cities.
+But this method also faces the same issue: Only the sentiment of certain groups of people (here the young (physically or mentally), urban upper middle class) is captured. 
+
+Therefore the big challenge is: **How can we find out the accurate state of the emotional well-being of the whole cross-section of society without selecting for certain groups?** 
+
 ### Our solution
