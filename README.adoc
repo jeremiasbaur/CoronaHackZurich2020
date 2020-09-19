@@ -27,10 +27,14 @@ Each of those data sources can give us very intimate insight about the emotional
 | Data Source | Covered Demographics
 
 | Spotify | children to middle-aged adults from all social classes
-| Twitter | middle-aged people from all social classes
-| mobile phone data | nearly all age groups across all social classes
+| Twitter | affluent millenials
+| Swisscom | nearly all age groups across all social classes
 | YouTube | nearly all age groups across all social classes
 |===
+
+Our current prototype uses data from Spotify and Twitter.
+Thanks to our extendable modular architecture it can be expanded and provide even more meaningful insights into society by also taking other data sources into account.
+We found that the addition of data from Swisscom and YouTube could make our product even more attractive in the future.
 
 === Spotify
 
@@ -53,11 +57,12 @@ Only one third of Twitter users are female and 80% of them are affluent millenia
 There is however no reason not to use Twitter data as part of a bigger system.
 Using Twitter in addition to other indicators proves to be stable and provides valuable sentiments.
 
-=== Future work: SwissCom
+=== Future work: Swisscom
 
-- SwissCom can provide location data of mobile
-- This data can then be used to use the entropy of the average density of SIM cards in a region - especially during the corona time this tells us something about the behavior and thus the state of people
-- can 'catch' people that would otherwise escape our analysis
+Swisscom is the largest telecommunications provider in Switzerland, and covers the larger part of the mobile communication market in switzerland.
+Developers can use Swisscom's API to access anonymized data about the number of people that are within given 100m by 100m squares throughout the day.
+The data doesn't provide sentiment information directly - but it is possible to use mathematical properties such as the Entropy to infer this knowledge in a postprocessing step.
+The big advantage of Swisscom's data is that it covers, unlike the other data sources we identified, everyone that owns a mobile phone - all demographics and most age groups.
 
 === Future work: YouTube
 
