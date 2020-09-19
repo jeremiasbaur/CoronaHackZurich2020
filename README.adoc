@@ -21,9 +21,7 @@ The problem is that using only one data source leads to results that doesn't rep
 We believe that combining several data sources in a proportional manner, each being dominated by certain demographics and groups, can give an accurate view of how the whole of society thinks and feels.
 
 We identified several important data sources, each representing a different demographics.
-Each of those data sources can give us very intimate about the corresponding group.
-
-== Summary
+Each of those data sources can give us very intimate insight about the emotional state of the corresponding group.
 
 |===
 | Name | Demographic
@@ -36,8 +34,14 @@ Each of those data sources can give us very intimate about the corresponding gro
 
 === Spotify
 
-- Demographic: young people of all social classes
-- PhD thesis by Tristan Jehan (Spotify guy) shows that songs tell us something about the emotions of people
+Music streaming has overtaken other kinds of music distribution in the recent years. 
+Spotify is the number one streaming service for music.
+It is very widely used among music enthusiasts.
+55% of Spotify's user base are millenials from all social classes.footnote:[Source: https://kommandotech.com/statistics/spotify-user-statistics/]
+Spotify publishes the song streaming charts on the country level on https://spotifycharts.com/regional[spotifycharts.com].
+Academic research shows that there exists a clear correlation between a persons mood and the type of music they are listening to.footnote:[See for example this PhD thesis: http://web.media.mit.edu/~tristan/]
+Besides Spotify people in this age groups use a wide range of different social media apps, such as Instagram, which prove difficult to use for emotion extraction purposes due to restrictions and the absence of a powerful API.
+Therefore we conclude that Spotify charts, due to Spotify's wide usage, offer one of the best indicator about the emotion of millenials.
 
 === Twitter
 
