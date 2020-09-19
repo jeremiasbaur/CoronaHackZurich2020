@@ -1,0 +1,111 @@
+= 🇨🇭 CHemotion
+:toc:
+
+image::logo.svg[Logo, 552, 192]
+
+== Inspiration
+To find out how the society feels at a certain moment in time is of great interest for many - from policy makers that want to support their people where it matters over social entrepreneurs that want to improve the welfare of the society to reporters that want to cover the most important topics and have a positive impact.
+But the usual sources of this emontional data often suffer from being highly biased - it only covers a subset of groups within the society, not at the society as a whole.
+
+The topics that concern society the most and the impact of these topics on people's emotions are often found out from singular and limited sources like the frequency of certain Hashtags on Twitter in a certain timespan.
+These data streams are typically dominated by technological knowledgeable, educated, adult men and women.
+It is obvious that this is not an accurate cross-section of a society as it does not include children, old people and people that enjoyed less education.
+These groups amount much larger numbers of people than the clientele of Twitter and are often affected by entirely different issues.
+
+Another method of sentiment testing is by randomly questioning people in the buzzing downtowns of cities.
+But this method also faces the same issue: Only the sentiment of certain groups of people (here the young (physically or mentally), urban upper middle class) is captured. 
+
+Therefore the big challenge is: *How can we find out the accurate state of the emotional well-being of the whole cross-section of society, not only for certain groups?* 
+
+== Our solution
+
+The problem is that using only one data source leads to results that doesn't represent the whole of society well.
+We believe that combining several data sources in a proportional manner, each being dominated by certain demographics and groups, can give an accurate view of how the whole of society thinks and feels.
+
+We identified several important data sources, each representing a different demographics.
+Each of those data sources can give us very intimate insight about the emotional state of the corresponding group.
+
+|===
+| Data Source | Covered Demographics
+
+| Spotify | children to middle-aged adults from all social classes
+| Twitter | affluent millenials
+| Swisscom | nearly all age groups across all social classes
+| YouTube | nearly all age groups across all social classes
+|===
+
+Our current prototype uses data from Spotify and Twitter.
+Thanks to our extendable modular architecture it can be expanded and provide even more meaningful insights into society by also taking other data sources into account.
+We found that the addition of data from Swisscom and YouTube could make our product even more attractive in the future.
+
+=== Spotify
+
+Music streaming has overtaken other kinds of music distribution in the recent years. 
+Spotify is the number one streaming service for music.
+It is very widely used among music enthusiasts.
+55% of Spotify's user base are millenials from all social classes.footnote:[Source: https://kommandotech.com/statistics/spotify-user-statistics/]
+Spotify publishes the song streaming charts on the country level on https://spotifycharts.com/regional[spotifycharts.com].
+Academic research shows that there exists a clear correlation between a persons mood and the type of music they are listening to.footnote:[Covered extensively in this PhD thesis: http://web.media.mit.edu/~tristan/phd/]
+Besides Spotify people in this age groups use a wide range of different social media apps, such as Instagram, which prove difficult to use for emotion extraction purposes due to restrictions and the absence of a powerful API.
+Therefore we conclude that Spotify charts, due to Spotify's wide usage, offer one of the best indicator about the emotion of millenials.
+
+=== Twitter
+
+Twitter is one of most well-known and largest footnote:[https://makeawebsitehub.com/social-media-sites/] social networks, not only but also becaues of the enthusiasm with which the current american persident uses it.
+It has a long history of being used for trend recognition - both in an academic footnote:[Example: https://www.kth.se/social/files/58878811f276540810b9ee1a/SB%C3%A4ckstr%C3%B6m_JFHaslum.pdf] and medial setting.
+The big advantage of Twitter is that it - unlike its big competitors - provides a generous API and location data.
+However, as discussed in the introduction, one should be seduced to use Twitter as the sole data source to recognize trends in a society as its demographic is not diverse enough to mirror a whole society.
+Only one third of Twitter users are female and 80% of them are affluent millenials.footnote:[https://www.omnicoreagency.com/twitter-statistics/]
+There is however no reason not to use Twitter data as part of a bigger system.
+Using Twitter in addition to other indicators proves to be stable and provides valuable sentiments.
+
+=== Future work: Swisscom
+
+Swisscom is the largest telecommunications provider in Switzerland, and covers the larger part of the mobile communication market in switzerland.
+Developers can use Swisscom's API to access anonymized data about the number of people that are within given 100m by 100m squares throughout the day.
+The data doesn't provide sentiment information directly - but it is possible to use mathematical properties such as the Entropy to infer this knowledge in a postprocessing step.
+The big advantage of Swisscom's data is that it covers, unlike the other data sources we identified, everyone that owns a mobile phone - all demographics and most age groups.
+
+=== Future work: YouTube
+
+YouTube is the largest online video-sharing platform in the world footnote:[https://en.wikipedia.org/wiki/YouTube].
+YouTube can also be seen as a social network and is more widely used than all other social networks in the US.footnote:[https://blog.hootsuite.com/youtube-stats-marketers/]
+81% of all adolescents and 73% of the adults use the platform in the US.footnote:[https://blog.hootsuite.com/youtube-stats-marketers/]
+We conclude that YouTube is the most widely used social network.
+It covers demographics that are barely touched by other social networks and can give very valuable insights.
+Academic research shows that the current state of emotions of individuals dictates their video consumption behavior on YouTube.
+Thanks to the YouTube API and other tools such as https://socialblade.com/youtube/[socialblade], using this data for sentiment analysis is indeed possible.
+However, this requires extensive preprocessing as the sentiment of each video must be analyzed, which is not a trivial task.
+ 
+== How we built it
+
+The architecture can be separated into three parts: Datamining, Backend and Frontend.
+
+The datamining is done with Python. 
+The Spotify API is accessed with `spotipy`. 
+The Spotify charts are scraped from https://spotifycharts.com/regional.
+The sentiment of the songs is determined according to their valency.
+https://github.com/cjhutto/vaderSentiment[`VADER sentiment`], a high quality academic sentiment analysis library, is used to analyze if a Tweet is positive or negative.
+The prepared data is stored in databases on Microsoft Azure.
+
+The backend server uses flask.
+
+The interactive map on the frontend was built using https://d3js.org/[d3].
+
+== Challenges
+
+We encountered many challenges - tiredness, anger, war, famines - and most of all our own ego.
+We were able to handle everything life threw at us by taking a deep breath and remembering the body movement exercise from migros at the opening ceremony.  
+
+== Contributions
+
+We propose the usage of different data sources for trend and sentiment analysis in a society.
+We demonstrate the effectiveness this approach has for this task.
+
+== Whats next?
+
+Add more data sources to the pipeline - for example Swisscom and YouTube as discussed before.
+
+== Build with
+
+Time, sweath and computers
