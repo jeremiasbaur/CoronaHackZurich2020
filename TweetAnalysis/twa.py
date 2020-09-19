@@ -23,66 +23,64 @@ def coordGetter(tweet):
         coords[1] /= len(tweet['place']['bounding_box']['coordinates'][0])
     return coords
 
-path = "Spotify/Twitter Bunches"
 
-tweets = []
+def keywordTweets(keywords, tweet):
+    count = 0
+    cleaned_tweets = []
+    for tweet in tweets:
+        #scores.append(analyser.polarity_scores(tweet['full_text']))
+        date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
 
-for file_name in os.listdir(path):
-    with open(path+"/"+file_name, encoding="utf8") as f:
-        for line in f.readlines():
-            tweets.extend(json.loads(line))
+        scores[date.weekday()].append(analyser.polarity_scores(tweet['full_text'])['compound'])
+
+        users.add(tweet['user']['id'])
+        if (set(keywords) & set(tweet['full_text'].split()) or set([i['text'] for i in tweet['entities']['hashtags']]) & set(keywords)):
+            count+=1
+
+            coords=coordGetter(tweet)
+
+            cleaned_tweets.append({'text':tweet['full_text'], 'hashtags': [i['text'] for i in tweet['entities']['hashtags']], \
+                                'date': date.__str__(), 'score': analyser.polarity_scores(tweet['full_text'])['compound'], \
+                                'user': tweet['user']['id'], 'coords': coords})
+
+        #print(cleaned_tweets[-1])
+    print(count)
+    return cleaned_tweets
 
 
-analyser = SentimentIntensityAnalyzer()
-users = set()
+if __name__=='__main__':
 
-scores=[]
-for i in range(7):
-    scores.append([])
+    path = "Spotify/Twitter Bunches"
+    tweets = []
 
-count = 0
+    for file_name in os.listdir(path):
+        with open(path+"/"+file_name, encoding="utf8") as f:
+            for line in f.readlines():
+                tweets.extend(json.loads(line))
 
-cleaned_tweets = []
 
-c2 = 0
-for tweet in tweets:
-    #scores.append(analyser.polarity_scores(tweet['full_text']))
-    date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
+    analyser = SentimentIntensityAnalyzer()
+    users = set()
 
-    scores[date.weekday()].append(analyser.polarity_scores(tweet['full_text'])['compound'])
+    scores=[]
+    for i in range(7):
+        scores.append([])
 
-    users.add(tweet['user']['id'])
-    if (set(["corona", "covid", "Covid", "Corona", "COVID", "BAG", "Fälle", "Fallzahlen", "cases", "infection", "Daniel Koch"]) 
-        | set([i['text'] for i in tweet['entities']['hashtags']])) & set(tweet['full_text'].split()):
-        count+=1
-        #print(tweet['full_text'])
 
-        coords=coordGetter(tweet)
+    cleaned_tweets = keywordTweets( ["corona", "covid", "Covid", "Corona", "COVID", "BAG", "Fälle", "Fallzahlen", "cases", "infection"], tweets)
 
-        cleaned_tweets.append({'text':tweet['full_text'], 'hashtags': [i['text'] for i in tweet['entities']['hashtags']], \
-                            'date': date.__str__(), 'score': analyser.polarity_scores(tweet['full_text'])['compound'], \
-                            'user': tweet['user']['id'], 'coords': coords})
 
-    #print(cleaned_tweets[-1])
-    
-    #if tweet['coordinates'] is not None and tweet['geo'] is not None:
-    #    print(tweet['place'], tweet['coordinates'], tweet['geo'])
+    for i, data in enumerate(scores):
+        overall = sum(data)
         
-#print(tweets[3456], len(tweets), len(users))
+        d = stats.relfreq(data, numbins=20)
+        #print(d)
+        #plt.bar(np.arange(len(data)), d)
+        #df = pd.DataFrame(data)
+        #df.plot.hist(bins=20)
+        
+        #plt.plot(d.frequency)
+        #plt.savefig(f'{i}.png')
 
-for i, data in enumerate(scores):
-    overall = sum(data)
-    
-    d = stats.relfreq(data, numbins=20)
-    #print(d)
-    #plt.bar(np.arange(len(data)), d)
-    #df = pd.DataFrame(data)
-    #df.plot.hist(bins=20)
-    
-    #plt.plot(d.frequency)
-    #plt.savefig(f'{i}.png')
-
-print(count)
-
-with open('TweetAnalysis/cleaned_tweets_corona.json', 'w') as f:
-    f.write(json.dumps(cleaned_tweets))
+    with open('TweetAnalysis/cleaned_tweets_corona.json', 'w') as f:
+        f.write(json.dumps(cleaned_tweets))
