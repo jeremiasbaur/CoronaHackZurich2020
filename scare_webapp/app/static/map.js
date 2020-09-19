@@ -39,14 +39,7 @@ var topology,
     geometries,
     dataById = {},
     carto = d3.cartogram()
-        .projection(proj)
-        .properties(function(d) {
-          if (!dataById["$" + d.properties.KTNR]) {
-            console.log('ERROR: Entry "' + d.properties.KTNR + '" was found in the Topojson but not in the data CSV. Please correct either of them.');
-          }
-          // Add the cartogram data as property of the cartogram features
-          return dataById[d.properties.KTNR];
-        });
+        .projection(proj);
 
 // Define the fields of the data
 var fields = [
@@ -83,10 +76,10 @@ d3.json("static/ch_cantons.topojson", function(topo) {
 
     // Prepare a function to easily access the data by its ID
     // "ID" for cantons: KTNR
-    dataById = d3.nest()
-        .key(function(d) { return parseInt(d.KTNR); })
-        .rollup(function(d) { return d[0]; })
-        .map(data);
+    // dataById = d3.nest()
+    //     .key(function(d) { return parseInt(d.KTNR); })
+    //     .rollup(function(d) { return d[0]; })
+    //     .map(data);
 
     // Initialize the map
     init();
@@ -230,7 +223,8 @@ function showTooltip(d, i) {
   tooltip.classed("hidden", false)
       .attr("style", "left:"+left+"px;top:"+top+"px")
       .html([
-        //'<strong>', getName(d), '</strong><br/>',
+        '<strong>', d.user, '</strong><br/>',
+        '<div style="color:blue">@', d.screen_name, '</div>',
         d.text,
       ].join(''));
 }

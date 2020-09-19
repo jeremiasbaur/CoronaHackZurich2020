@@ -32,7 +32,7 @@ def keywordTweets(keywords, tweet):
         date = datetime.strptime(tweet['created_at'], "%a %b %d %X %z %Y")
 
         scores[date.weekday()].append(analyser.polarity_scores(tweet['full_text'])['compound'])
-        
+
         users.add(tweet['user']['id'])
         keyword_set = set([i.lower() for i in keywords])
         if (keyword_set & set(tweet['full_text'].lower().split()) or set([i['text'].lower() for i in tweet['entities']['hashtags']]) & keyword_set):
@@ -41,7 +41,7 @@ def keywordTweets(keywords, tweet):
         coords=coordGetter(tweet)
         cleaned_tweets.append({'text':tweet['full_text'], 'hashtags': [i['text'] for i in tweet['entities']['hashtags']], \
                                 'date': date.__str__(), 'score': analyser.polarity_scores(tweet['full_text'])['compound'], \
-                                'user': tweet['user']['id'], 'coords': coords, 'tweetId': tweet['id_str'], 'langCode': tweet['lang']})
+                                'user': tweet['user']['name'], 'screen_name': tweet['user']['screen_name'], 'coords': coords, 'tweetId': tweet['id_str'], 'langCode': tweet['lang']})
 
         #print(cleaned_tweets[-1])
     print(count)
@@ -75,13 +75,13 @@ if __name__=='__main__':
 
     for i, data in enumerate(scores):
         overall = sum(data)
-        
+
         d = stats.relfreq(data, numbins=20)
         #print(d)
         #plt.bar(np.arange(len(data)), d)
         #df = pd.DataFrame(data)
         #df.plot.hist(bins=20)
-        
+
         #plt.plot(d.frequency)
         #plt.savefig(f'{i}.png')
 
