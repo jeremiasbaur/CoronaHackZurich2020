@@ -47,5 +47,7 @@ def test_describe_image():
     print(r)
 
 def test_sentiment_analysis():
-    r = sentiment_analysis(["You are stupid", "I hate my life", "I love my life"])
+    r = sentiment_analysis(["You are stupid", "I hate my life", "I love my life", "You are smarter than a dog. But not much"])
     print(r)
+
+test_sentiment_analysis()
