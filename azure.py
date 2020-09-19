@@ -3,9 +3,13 @@ import os
 
 # Good Azure API Guide: https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/quickstarts/python
 
-subscription_key = "088488a3cf1c46e69292027802ac3d96"
-endpoint = "https://whatever123.cognitiveservices.azure.com"
-description_api_url = endpoint + "/vision/v2.0/describe" # "/text/analytics/v3.0/languages"
+subscription_key = os.environ['AZURE_KEY']
+endpoint_name = os.environ['AZURE_ENDPOINT']
+assert subscription_key, "AZURE_KEY environment variable not set!"
+assert endpoint_name, "AZURE_ENDPOINT environment variable not set!"
+
+endpoint = "https://" + endpoint_name + ".cognitiveservices.azure.com"
+description_api_url = endpoint + "/vision/v2.0/describe"
 sentiment_api_url = endpoint + "/text/analytics/v2.0/sentiment"
 headers = {"Ocp-Apim-Subscription-Key": subscription_key}
 
