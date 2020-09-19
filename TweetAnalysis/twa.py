@@ -38,11 +38,10 @@ def keywordTweets(keywords, tweet):
         if (keyword_set & set(tweet['full_text'].lower().split()) or set([i['text'].lower() for i in tweet['entities']['hashtags']]) & keyword_set):
             count+=1
 
-            coords=coordGetter(tweet)
-
-            cleaned_tweets.append({'text':tweet['full_text'], 'hashtags': [i['text'] for i in tweet['entities']['hashtags']], \
+        coords=coordGetter(tweet)
+        cleaned_tweets.append({'text':tweet['full_text'], 'hashtags': [i['text'] for i in tweet['entities']['hashtags']], \
                                 'date': date.__str__(), 'score': analyser.polarity_scores(tweet['full_text'])['compound'], \
-                                'user': tweet['user']['id'], 'coords': coords})
+                                'user': tweet['user']['id'], 'coords': coords, 'tweetId': tweet['id_str'], 'langCode': tweet['lang']})
 
         #print(cleaned_tweets[-1])
     print(count)
@@ -70,9 +69,9 @@ if __name__=='__main__':
     corona = ["corona", "covid", "covid", "COVID", "BAG", "Fälle", "Fallzahlen", "cases", "infection",'maskenpflicht','stayhomestaysafe','stayhome','distancing','covidiots']
     abstimmung = ["kampfjets",'armee','begrenzungsinitiative','svp','srf','initiative','abstimmung','streik']
 
-    cleaned_tweets = keywordTweets(abstimmung , tweets)
+    cleaned_tweets = keywordTweets(corona , tweets)
 
-    print(cleaned_tweets)
+    #print(cleaned_tweets)
 
     for i, data in enumerate(scores):
         overall = sum(data)
@@ -86,5 +85,5 @@ if __name__=='__main__':
         #plt.plot(d.frequency)
         #plt.savefig(f'{i}.png')
 
-    with open('TweetAnalysis/cleaned_tweets_corona.json', 'w') as f:
+    with open('TweetAnalysis/cleaned_tweets.json', 'w') as f:
         f.write(json.dumps(cleaned_tweets))

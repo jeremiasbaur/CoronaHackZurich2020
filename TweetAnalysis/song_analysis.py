@@ -103,14 +103,16 @@ if __name__=='__main__':
     with open('Spotify/Latest_CH.csv', encoding="utf8") as f:
         reader = csv.reader(f, delimiter=',')
         next(reader)
+
         for line in reader:
             date = datetime.strptime(line[-1], "%Y-%m-%d")
             
             if len(song_data[line[5]])<3: continue
             if date in chart_data:
-                chart_data[date].append(song_data[line[5]][2])
+                chart_data[date].append(song_data[line[5]][2]*int(line[3]))
             else:
-                chart_data[date] = [song_data[line[5]][2]]
+                chart_data[date] = [song_data[line[5]][2]*int(line[3])]
+
 
     chart = []
     for k, v in chart_data.items():

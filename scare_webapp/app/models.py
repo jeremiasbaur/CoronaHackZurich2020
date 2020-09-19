@@ -61,6 +61,17 @@ class SpotifySong(db.Model):
     #relationship
     chartSong = db.relationship("ChartSong", back_populates="spotifySong")
 
+class Tweet(db.Model):
+    tweetId = db.Column(db.String(255), primary_key=True)
+    text = db.Column(db.String(500)) 
+    date = db.Column(db.DateTime)
+    score = db.Column(db.Float) 
+    user_id = db.String(db.String(50))
+    coordX = db.Column(db.String(40))
+    coordY = db.Column(db.String(40))
+    tweetUrl = db.Column(db.String(255))
+    language = db.Column(db.String(10))
+
 class SwitzerlandPopulation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(50))
