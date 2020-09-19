@@ -272,26 +272,32 @@ function update() {
 
   // display Tweets
   d3.json("static/twitter.json", function(twitter) {
-    twitter = twitter.filter(tweet => tweet.coordinates);
-    // console.log(new Date(twitter[0].created_at).getDate())
-    twitter = twitter.filter(tweet => new Date(tweet.created_at).getMinutes() === parseInt(currentKey))
     console.log(twitter)
-    map 
-        .selectAll("myCircles")
-        .remove();
+    // console.log(new Date(twitter[0].date).getDate())
+    //twitter = twitter.filter(tweet => new Date(tweet.date).getMinutes() === parseInt(currentKey))
+    //twitter = twitter.filter(tweet => tweet.score < -0.8);
+    //console.log(twitter)
+    // map
+    //     .selectAll("myCircles")
+    //     .remove();
+
+    function computeSentimentColor(sentiment) {
+      sentiment = (sentiment + 1) / 2;
+      return "rgb(" + (1 - sentiment) * 255 + ", " + sentiment * 255 + ", 0)";
+    }
 
     map
         .selectAll("myCircles")
         .data(twitter)
         .enter()
         .append("circle")
-        .attr("cx", function(d){ return proj(d.coordinates.coordinates)[0] })
-        .attr("cy", function(d){ return proj(d.coordinates.coordinates)[1] })
-        .attr("r", 14)
-        .style("fill", "69b3a2")
-        .attr("stroke", "#69b3a2")
-        .attr("stroke-width", 3)
-        .attr("fill-opacity", .4);
+        .attr("cx", function(d){ return proj([d.coords[1], d.coords[0]])[0] })
+        .attr("cy", function(d){ return proj([d.coords[1], d.coords[0]])[1] })
+        .attr("r", 7)
+        .style("fill", function(d) { return computeSentimentColor(d.score)} )
+        //.attr("stroke", "#69b3a2")
+        .attr("stroke-width", 1)
+        .attr("fill-opacity", 0.3);
   });
 
   // Prepare the values and determine minimum and maximum values
