@@ -1,14 +1,5 @@
 /**
- * Lukas Vonlanthen (2015)
- * lukas.vonlanthen[at]cde.unibe.ch
- *
- * Code inspired by:
- * - http://prag.ma/code/d3-cartogram/
- * - http://techslides.com/demos/d3/worldmap-template.html
- *
- * Data sources:
- * - http://www.pxweb.bfs.admin.ch/?px_language=en
- * - http://www.bfs.admin.ch/bfs/portal/de/index/dienstleistungen/geostat/datenbeschreibung/generalisierte_gemeindegrenzen.html
+ * Code inspired by: https://schuelerzahlen-zuerich.opendata.iwi.unibe.ch/App2/d3geo-2/ch_var/map.js
  */
 
 // hide the form if the browser doesn't do SVG,
@@ -138,21 +129,11 @@ function init() {
       })
       .attr("fill", "#fafafa")
       .attr("d", path);
-
-  // Show tooltips when hovering over the features
-  // Use "mousemove" instead of "mouseover" to update the tooltip
-  // position when moving the cursor inside the feature.
-  mapFeatures.on('mousemove', showTooltip)
-      .on('mouseout', hideTooltip);
-
-  // // Parse the URL hash to see if the map was loaded with a cartogram
-  // parseHash();
 }
 
 update();
 keywords = "";
 function update() {
-
   // display Tweets
   d3.json("static/twitter.json", function(tweets) {
     tweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
@@ -173,7 +154,7 @@ function update() {
         .selectAll("circle")
         .remove();
 
-    map
+    const bubbles = map
         .selectAll("myCircles")
         .data(tweets)
         .enter()
@@ -185,34 +166,41 @@ function update() {
         //.attr("stroke", "#69b3a2")
         .attr("stroke-width", 1)
         .attr("fill-opacity", 0.5);
+
+
+    // Show tooltips when hovering over the features
+    // Use "mousemove" instead of "mouseover" to update the tooltip
+    // position when moving the cursor inside the feature.
+    bubbles.on('mousemove', showTooltip)
+        .on('mouseout', hideTooltip);
   });
 
-  // Prepare the values and determine minimum and maximum values
-  var value = function(d) {
-        return getValue(d);
-      },
-      values = mapFeatures.data()
-          .map(value)
-          .filter(function(n) {
-            return !isNaN(n);
-          })
-          .sort(d3.ascending),
-      lo = values[0],
-      hi = values[values.length - 1];
-
-  // Normalize the scale to positive numbers
-  var scale = d3.scale.linear()
-      .domain([lo, hi])
-      .range([1, 1000]);
-
-  // Tell the cartogram to use the scaled values
-  carto.value(function(d) {
-    return scale(value(d));
-  });
-
-  // Generate the new features and add them to the map
-  var cartoFeatures = carto(topology, geometries).features;
-  mapFeatures.data(cartoFeatures);
+  // // Prepare the values and determine minimum and maximum values
+  // var value = function(d) {
+  //       return getValue(d);
+  //     },
+  //     values = mapFeatures.data()
+  //         .map(value)
+  //         .filter(function(n) {
+  //           return !isNaN(n);
+  //         })
+  //         .sort(d3.ascending),
+  //     lo = values[0],
+  //     hi = values[values.length - 1];
+  //
+  // // Normalize the scale to positive numbers
+  // var scale = d3.scale.linear()
+  //     .domain([lo, hi])
+  //     .range([1, 1000]);
+  //
+  // // Tell the cartogram to use the scaled values
+  // carto.value(function(d) {
+  //   return scale(value(d));
+  // });
+  //
+  // // Generate the new features and add them to the map
+  // var cartoFeatures = carto(topology, geometries).features;
+  // mapFeatures.data(cartoFeatures);
 }
 
 /**
@@ -223,7 +211,6 @@ function update() {
  * @param {Number} i - The ID of the feature
  */
 function showTooltip(d, i) {
-
   // Get the current mouse position (as integer)
   var mouse = d3.mouse(map.node()).map(function(d) { return parseInt(d); });
 
@@ -243,8 +230,8 @@ function showTooltip(d, i) {
   tooltip.classed("hidden", false)
       .attr("style", "left:"+left+"px;top:"+top+"px")
       .html([
-        '<strong>', getName(d), '</strong><br/>',
-        'Tweets: ', formatNumber(getValue(d)),
+        //'<strong>', getName(d), '</strong><br/>',
+        d.text,
       ].join(''));
 }
 
