@@ -30,4 +30,4 @@ ch_population.csv
 playground/
 
 # config file
-scare_app/config.py
+scare_webapp/config.py
