@@ -1,5 +1,7 @@
-= image::logo.png[Logo]
+= CHemotion
 :toc:
+
+image::logo.png[Logo]
 
 == Inspiration
 To find out how the society feels at a certain moment in time is of great interest for many - from policy makers that want to support their people where it matters over social entrepreneurs that want to improve the welfare of the society to reporters that want to cover the most important topics and have a positive impact.
