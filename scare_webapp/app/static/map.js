@@ -71,19 +71,7 @@ d3.json("static/ch_cantons.topojson", function(topo) {
   // The mapped unit for cantons: Cantons
   geometries = topology.objects.cantons.geometries;
 
-  // Read the data for the cartogram
-  d3.csv("static/ch_population.csv", function(data) {
-
-    // Prepare a function to easily access the data by its ID
-    // "ID" for cantons: KTNR
-    // dataById = d3.nest()
-    //     .key(function(d) { return parseInt(d.KTNR); })
-    //     .rollup(function(d) { return d[0]; })
-    //     .map(data);
-
-    // Initialize the map
-    init();
-  });
+  init();
 });
 
 
@@ -127,73 +115,54 @@ function init() {
 update();
 keywords = "";
 function update() {
-  // display Tweets
-  d3.json("static/twitter.json", function(tweets) {
-    tweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
-    //tweets = tweets.filter(tweet => tweet.score < -0.8);
-    console.log(tweets)
+  // load and display Tweets
+  d3.json("static/cleaned_tweets_en.json", function(t1) {
+    var tweets = []
+    tweets.push(...t1);
+    d3.json("static/cleaned_tweets_de.json", function(t2) {
+      tweets.push(...t2);
+      tweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
+      console.log(tweets)
 
-    console.log(keywords)
-    if (keywords !== "") {
-      tweets = tweets.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
-    }
+      if (keywords !== "") {
+        tweets = tweets.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
+      }
 
-    function computeSentimentColor(sentiment) {
-      sentiment = (sentiment + 1) / 2;
-      return "rgb(" + (1 - sentiment) * 255 + ", " + sentiment * 255 + ", 0)";
-    }
+      function computeSentimentColor(sentiment) {
+        if (sentiment > 0) {
+          return "rgb(" + (1 - sentiment) * 255 + ", 255 , 0)";
+        } else {
+          return "rgb(255, "  + (1 + sentiment) * 255 + ", 0)";
+        }
+      }
 
-    map
-        .selectAll("circle")
-        .remove();
+      map.selectAll("circle")
+          .remove();
 
-    const bubbles = map
-        .selectAll("myCircles")
-        .data(tweets)
-        .enter()
-        .append("circle")
-        .attr("cx", function(d){ return proj([d.coords[1], d.coords[0]])[0] })
-        .attr("cy", function(d){ return proj([d.coords[1], d.coords[0]])[1] })
-        .attr("r", 7)
-        .style("fill", function(d) { return computeSentimentColor(d.score)} )
-        //.attr("stroke", "#69b3a2")
-        .attr("stroke-width", 1)
-        .attr("fill-opacity", 0.5);
+      const bubbles = map.selectAll("myCircles")
+          .data(tweets)
+          .enter()
+          .append("circle")
+          .attr("cx", function (d) {
+            return proj([d.coords[1], d.coords[0]])[0]
+          })
+          .attr("cy", function (d) {
+            return proj([d.coords[1], d.coords[0]])[1]
+          })
+          .attr("r", 7)
+          .style("fill", function (d) {
+            return computeSentimentColor(d.score)
+          })
+          .attr("stroke", "#777777")
+          .attr("stroke-width", 1)
+          .attr("fill-opacity", 0.5);
 
-
-    // Show tooltips when hovering over the features
-    // Use "mousemove" instead of "mouseover" to update the tooltip
-    // position when moving the cursor inside the feature.
-    bubbles.on('mousemove', showTooltip)
-        .on('mouseout', hideTooltip);
-  });
-
-  // // Prepare the values and determine minimum and maximum values
-  // var value = function(d) {
-  //       return getValue(d);
-  //     },
-  //     values = mapFeatures.data()
-  //         .map(value)
-  //         .filter(function(n) {
-  //           return !isNaN(n);
-  //         })
-  //         .sort(d3.ascending),
-  //     lo = values[0],
-  //     hi = values[values.length - 1];
-  //
-  // // Normalize the scale to positive numbers
-  // var scale = d3.scale.linear()
-  //     .domain([lo, hi])
-  //     .range([1, 1000]);
-  //
-  // // Tell the cartogram to use the scaled values
-  // carto.value(function(d) {
-  //   return scale(value(d));
-  // });
-  //
-  // // Generate the new features and add them to the map
-  // var cartoFeatures = carto(topology, geometries).features;
-  // mapFeatures.data(cartoFeatures);
+      // Show tooltips when hovering over the features
+      // Use "mousemove" instead of "mouseover" to update the tooltip
+      // position when moving the cursor inside the feature.
+      bubbles.on('mousemove', showTooltip)
+          .on('mouseout', hideTooltip);
+    })});
 }
 
 /**
