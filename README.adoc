@@ -1,4 +1,4 @@
-= CHemotion
+= 🇨🇭 CHemotion
 :toc:
 
 image::logo.svg[Logo, 552, 192]
