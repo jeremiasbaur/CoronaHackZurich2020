@@ -83,17 +83,17 @@ The datamining is done with Python.
 The Spotify API is accessed with `spotipy`. 
 The Spotify charts are scraped from https://spotifycharts.com/regional.
 The sentiment of the songs is determined according to their valency.
-https://github.com/cjhutto/vaderSentiment[`VADER sentiment`], a high quality academic sentiment analysis library is used to analyze if a Tweet is positive or negative.
+https://github.com/cjhutto/vaderSentiment[`VADER sentiment`], a high quality academic sentiment analysis library, is used to analyze if a Tweet is positive or negative.
 The prepared data is stored in databases on Microsoft Azure.
 
-The server uses flask.
+The backend server uses flask.
 
 The interactive map on the frontend was built using https://d3js.org/[d3].
 
 == Challenges
 
-- Twitter API is a nightmare
-- Presentating all the data is a UX challenge which we of course mastered perfectly
+We encountered many challenges - tiredness, anger, war, famines - and most of all our own ego.
+We were able to handle everything life threw at us by taking a deep breath and remembering the body movement exercise from migros at the opening ceremony.  
 
 == Accomplishment
 
