@@ -50,6 +50,21 @@ map.call(zoom);
 // later)
 var proj = d3.geo.mercator();
 
+const density_data = JSON.parse(document.currentScript.getAttribute('density_data'));//.slice(0, 100000);
+
+map
+    .selectAll("myCircles")
+    .data(density_data)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d){ return proj([d[0], d[1]])[0] })
+    .attr("cy", function(d){ return proj([d[0], d[1]])[1] })
+    .attr("r", 14)
+    .style("fill", "69b3a2")
+    .attr("stroke", "#69b3a2")
+    .attr("stroke-width", 3)
+    .attr("fill-opacity", .4)
+
 // Prepare the cartogram
 var topology,
     geometries,
@@ -57,7 +72,7 @@ var topology,
     carto = d3.cartogram()
         .projection(proj)
         .properties(function(d) {
-          if (!dataById[d.properties.KTNR]) {
+          if (!dataById["$" + d.properties.KTNR]) {
             console.log('ERROR: Entry "' + d.properties.KTNR + '" was found in the Topojson but not in the data CSV. Please correct either of them.');
           }
           // Add the cartogram data as property of the cartogram features
@@ -202,6 +217,9 @@ function init() {
       path = d3.geo.path()
           .projection(proj);
 
+  console.log(features);
+  console.log(geometries);
+
   // Determine extent of the topology
   var b = topology.bbox;
   t = [(b[0]+b[2])/2, (b[1]+b[3])/2];
@@ -298,6 +316,7 @@ function update() {
   });
 
   // Generate the new features and add them to the map
+  console.log(topology)
   var cartoFeatures = carto(topology, geometries).features;
   mapFeatures.data(cartoFeatures);
 
@@ -464,7 +483,11 @@ function hideUpdateIndicator() {
  * @return {Number} value
  */
 function getValue(f) {
-  return +f.properties[currentKey];
+  if (f.properties) {
+    return +f.properties[currentKey];
+  } else {
+    return 0;
+  }
 }
 
 
@@ -476,7 +499,11 @@ function getValue(f) {
  * @return {String} name
  */
 function getName(f) {
-  return f.properties.Name;
+  if (f.properties) {
+    return f.properties.Name;
+  } else {
+    return "default";
+  }
 }
 
 
