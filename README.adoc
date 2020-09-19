@@ -43,7 +43,7 @@ Spotify is the number one streaming service for music.
 It is very widely used among music enthusiasts.
 55% of Spotify's user base are millenials from all social classes.footnote:[Source: https://kommandotech.com/statistics/spotify-user-statistics/]
 Spotify publishes the song streaming charts on the country level on https://spotifycharts.com/regional[spotifycharts.com].
-Academic research shows that there exists a clear correlation between a persons mood and the type of music they are listening to.footnote:[See for example this PhD thesis: http://web.media.mit.edu/~tristan/]
+Academic research shows that there exists a clear correlation between a persons mood and the type of music they are listening to.footnote:[Covered extensively in this PhD thesis: http://web.media.mit.edu/~tristan/phd/]
 Besides Spotify people in this age groups use a wide range of different social media apps, such as Instagram, which prove difficult to use for emotion extraction purposes due to restrictions and the absence of a powerful API.
 Therefore we conclude that Spotify charts, due to Spotify's wide usage, offer one of the best indicator about the emotion of millenials.
 
@@ -66,10 +66,14 @@ The big advantage of Swisscom's data is that it covers, unlike the other data so
 
 === Future work: YouTube
 
-- Demographic: nearly everyone
-- TODO: find some source why this is useful
-- maybe people watch more "negative" videos if they are more scared?
-- possibly a very rich dataset - the demographic can possibly determined by the video title / content / author and topic tells us about emotion
+YouTube is the largest online video-sharing platform in the world footnote:[https://en.wikipedia.org/wiki/YouTube].
+YouTube can also be seen as a social network and is more widely used than all other social networks in the US.footnote:[https://blog.hootsuite.com/youtube-stats-marketers/]
+81% of all adolescents and 73% of the adults use the platform in the US.footnote:[https://blog.hootsuite.com/youtube-stats-marketers/]
+We conclude that YouTube is the most widely used social network.
+It covers demographics that are barely touched by other social networks and can give very valuable insights.
+Academic research shows that the current state of emotions of individuals dictates their video consumption behavior on YouTube.
+Thanks to the YouTube API and other tools such as https://socialblade.com/youtube/[socialblade], using this data for sentiment analysis is indeed possible.
+However, this requires extensive preprocessing as the sentiment of each video must be analyzed, which is not a trivial task.
  
 == How we build it
 
