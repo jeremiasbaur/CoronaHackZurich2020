@@ -16,3 +16,11 @@ __pycache__/*
 */.ipynb_checkpoints/*
 .ipynb_checkpoints/*
 .ipynb_checkpoints
+node_modules/
+
+# IDE files
+.idea
+
+# example data
+ch_cantons.topojson
+ch_population.csv

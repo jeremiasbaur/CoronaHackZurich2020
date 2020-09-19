@@ -1,0 +1,131 @@
+<!-- Code and data from https://schuelerzahlen-zuerich.opendata.iwi.unibe.ch/App2/d3geo-2/ch_var/ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cartogram: Cantons of Switzerland over time</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-float.min.css" integrity="sha256-4ldVyEvC86/kae2IBWw+eJrTiwNEbUUTmN0zkP4luL4=" crossorigin="anonymous">
+    <style type="text/css">
+
+    body.updating {
+        cursor: wait;
+    }
+
+    #status, div.footer {
+        color: #999;
+        font-size: 0.8em;
+    }
+
+    #map-container {
+        border: 1px solid silver;
+        position: relative;
+    }
+
+    #map {
+        background: #fff;
+    }
+
+    path.mapFeature {
+        stroke: #666;
+        stroke-width: .5;
+    }
+
+    path.mapFeature:hover {
+        stroke: #000;
+        opacity: 0.8;
+    }
+
+    div.ttip {
+        color: #222;
+        background: #fff;
+        padding: .5em;
+        text-shadow: #f5f5f5 0 1px 0;
+        border-radius: 2px;
+        box-shadow: 0px 0px 2px 0px #a6a6a6;
+        opacity: 0.9;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    div.footer {
+        border-top: 1px solid silver;
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="row">
+            <div class="column">
+                <h1>Cartogram</h1>
+                <form>
+                    <div class="row">
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="medium-8 columns">
+                                    <div class="row">
+                                        <div class="small-3 columns">
+                                            <label for="field" class="inline">Scale by</label>
+                                        </div>
+                                        <div class="small-9 columns">
+                                            <select id="field"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="medium-4 columns">
+                                    <div class="row">
+                                        <div class="small-3 columns">
+                                            <label for="year" class="inline">in</label>
+                                        </div>
+                                        <div class="small-9 columns">
+                                            <select id="year"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="row">
+                                <div class="small-6 columns">
+                                    <span id="status"></span>
+                                </div>
+                                <div class="small-6 columns">
+                                    <div class="row">
+                                        <div class="button-bar right">
+                                            <ul class="button-group">
+                                                <li><button id="play" class="tiny button success">Play</button></li>
+                                                <li><button id="stop" class="tiny button alert" disabled="disabled">Stop</button></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <div id="map-container">
+                    <svg id="map"></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="node_modules/d3/d3.min.js"></script>
+    <script src="node_modules/colorbrewer/index.js"></script>
+    <script src="node_modules/topojson/build/topojson.min.js"></script>
+    <script src="https://schuelerzahlen-zuerich.opendata.iwi.unibe.ch/App2/d3geo-2/lib/cartogram.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="map.js" type="text/javascript"></script>
+</body>
+</html>
