@@ -18,10 +18,15 @@ These groups amount much larger numbers of people than the clientele of Twitter 
 Another method of sentiment testing is by randomly questioning people in the buzzing downtowns of cities.
 But this method also faces the same issue: Only the sentiment of certain groups of people (here the young (physically or mentally), urban upper middle class) is captured. 
 
-Therefore the big challenge is: **How can we find out the accurate state of the emotional well-being of the whole cross-section of society without selecting for certain groups?** 
+Therefore the big challenge is: **How can we find out the accurate state of the emotional well-being of the whole cross-section of society, not only for certain groups?** 
 
 ### Our solution
 
+The problem is that using only one data source leads to results that doesn't represent the whole of society well.
+We believe that combining several data sources in a proportional manner, each being dominated by certain demographics and groups, can give an accurate view of how the whole of society thinks and feels.
+
+We identified several data sources, each representing a different demographics.
+ 
 Only summary right now, will write full sentences later
 
 - Problem: singular data source -> doesnt reflect whole society very well
