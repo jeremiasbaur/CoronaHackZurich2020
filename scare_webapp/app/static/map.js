@@ -62,19 +62,15 @@ var fields = [
       {name: "(no scale)", id: "none"},
       {name: "Number of tweets", id: "tweets_total", key: "%d"}
     ],
-    months = [20, 21, 22, 23, 24, 25], //["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
-    month = months[0],
-    currentKey;
-
-
-// Define the dropdown to select a month.
-var monthSelect = d3.select("#year");
+    day = 10;
 
 // D3's "change" event is somehow not triggered when selecting the
 // dropdown value programmatically. Use jQuery's change event instead.
-$('#year').on("change", function(e) {
+$('#day').on("change", function(e) {
   // On change, update the URL hash
-  month = months[this.selectedIndex];
+  day = parseInt(this.value);
+  console.log(day);
+  update();
 });
 
 d3.select("#keywords")
@@ -83,20 +79,6 @@ d3.select("#keywords")
   keywords = this.value;
   update();
 });
-
-
-// Populate its options with the months available
-monthSelect.selectAll("option")
-    .data(months)
-    .enter()
-    .append("option")
-    .attr("value", function(y) { return y; })
-    .text(function(y) { return y; })
-
-// // Add a listener to the change of the URL hash
-// window.onhashchange = function() {
-//   parseHash();
-// };
 
 // Read the geometry data
 d3.json("static/ch_cantons.topojson", function(topo) {
@@ -167,18 +149,20 @@ function init() {
   // parseHash();
 }
 
+update();
+keywords = "";
 function update() {
 
-  // Update the current key
-  currentKey = month;
-
   // display Tweets
-  d3.json("static/twitter.json", function(twitter) {
-    console.log(twitter)
-    // console.log(new Date(twitter[0].date).getDate())
-    //twitter = twitter.filter(tweet => new Date(tweet.date).getMinutes() === parseInt(currentKey))
-    //twitter = twitter.filter(tweet => tweet.score < -0.8);
-    twitter = twitter.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
+  d3.json("static/twitter.json", function(tweets) {
+    tweets = tweets.filter(tweet => new Date(tweet.date).getDate() === day);
+    //tweets = tweets.filter(tweet => tweet.score < -0.8);
+    console.log(tweets)
+
+    console.log(keywords)
+    if (keywords !== "") {
+      tweets = tweets.filter(tweet => keywords.split(',').some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
+    }
 
     function computeSentimentColor(sentiment) {
       sentiment = (sentiment + 1) / 2;
@@ -191,7 +175,7 @@ function update() {
 
     map
         .selectAll("myCircles")
-        .data(twitter)
+        .data(tweets)
         .enter()
         .append("circle")
         .attr("cx", function(d){ return proj([d.coords[1], d.coords[0]])[0] })
@@ -281,7 +265,7 @@ function hideTooltip() {
  */
 function getValue(f) {
   if (f.properties) {
-    return +f.properties[currentKey];
+    return +f.properties[day];
   } else {
     return 0;
   }

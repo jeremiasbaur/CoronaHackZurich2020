@@ -66,59 +66,24 @@
     <div id="container">
         <div class="row">
             <div class="column">
-                <h1>Cartogram</h1>
+                <h1>Tweets in Switzerland</h1>
                 <form>
                     <div class="row">
-                        <div class="medium-6 columns">
-                            <div class="row">
-                                <div class="medium-8 columns">
-                                    <div class="row">
-                                        <div class="small-3 columns">
-                                            <label for="field" class="inline">Scale by</label>
-                                        </div>
-                                        <div class="small-9 columns">
-                                            <select id="field"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="medium-4 columns">
-                                    <div class="row">
-                                        <div class="small-3 columns">
-                                            <label for="year" class="inline">in</label>
-                                        </div>
-                                        <div class="small-9 columns">
-                                            <select id="year"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="medium-8 columns">
-                                    <div class="row">
-                                        <div class="small-3 columns">
-                                            <label for="keywords" class="inline">Keywords</label>
-                                        </div>
-                                        <div class="small-9 columns">
-                                            <input id="keywords" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="small-1 columns">
+                            <label for="keywords" class="inline"><b>Keywords</b></label>
                         </div>
-                        <div class="medium-6 columns">
-                            <div class="row">
-                                <div class="small-6 columns">
-                                    <span id="status"></span>
-                                </div>
-                                <div class="small-6 columns">
-                                    <div class="row">
-                                        <div class="button-bar right">
-                                            <ul class="button-group">
-                                                <li><button id="play" class="tiny button success">Play</button></li>
-                                                <li><button id="stop" class="tiny button alert" disabled="disabled">Stop</button></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="small-11 columns">
+                            <input id="keywords" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="small-1 columns">
+                            <label for="day" class="inline"><b>Day</b></label>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="range" id="day" min="10" max="19" oninput="num.value = 'Sep ' + this.value + ' 2020'">
+                            <output id="num">Sep 10 2020</output>
                         </div>
                     </div>
                 </form>
