@@ -1,5 +1,7 @@
 # CoronaHackZurich2020
 
-Set these environment variables (from Slack):
+## Technical
+Set these environment variables to work with `azure.py` (values posted in Slack):
 - "AZURE_KEY"
 - "AZURE_ENDPOINT"
+
