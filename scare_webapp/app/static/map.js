@@ -28,7 +28,6 @@ var width = 960,
 
 // Define the elements needed for map creation
 var body = d3.select("body"),
-    stat = d3.select("#status"),
     map = d3.select("#map").attr("preserveAspectRatio", "xMidYMid")
         .attr("viewBox", "0 0 " + width + " " + height),
     layer = map.append("g")
@@ -65,24 +64,6 @@ var proj = d3.geo.mercator();
 //     .attr("stroke-width", 3)
 //     .attr("fill-opacity", .4)
 
-// display twitter data
-d3.json("static/twitter.json", function(twitter) {
-  twitter = twitter.filter(tweet => tweet.coordinates);
-
-  map
-    .selectAll("myCircles")
-    .data(twitter)
-    .enter()
-    .append("circle")
-    .attr("cx", function(d){ return proj(d.coordinates.coordinates)[0] })
-    .attr("cy", function(d){ return proj(d.coordinates.coordinates)[1] })
-    .attr("r", 14)
-    .style("fill", "69b3a2")
-    .attr("stroke", "#69b3a2")
-    .attr("stroke-width", 3)
-    .attr("fill-opacity", .4)
-});
-
 // Prepare the cartogram
 var topology,
     geometries,
@@ -100,19 +81,15 @@ var topology,
 // Define the fields of the data
 var fields = [
       {name: "(no scale)", id: "none"},
-      {name: "Total Population", id: "pop_total", key: "pop_%d"},
-      {name: "Female Population", id: "pop_female", key: "female_%d"},
-      {name: "Male Population", id: "pop_male", key: "male_%d"},
-      {name: "Swiss Population", id: "pop_swiss", key: "ch_%d"},
-      {name: "Foreign Population", id: "pop_foreign", key: "foreign_%d"},
+      {name: "Number of tweets", id: "tweets_total", key: "%d"}
     ],
-    years = [1971, 1981, 1991, 2001, 2010],
+    months = [20, 21, 22, 23, 24, 25], //["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
     fieldsById = d3.nest()
         .key(function(d) { return d.id; })
         .rollup(function(d) { return d[0]; })
         .map(fields),
     field = fields[0],
-    year = years[0],
+    month = months[0],
     currentKey;
 
 // Define the dropdown to select a field to scale by.
@@ -120,7 +97,7 @@ var fieldSelect = d3.select("#field")
     .on("change", function(e) {
       // On change, update the URL hash
       field = fields[this.selectedIndex];
-      location.hash = "#" + [field.id, year].join("/");
+      location.hash = "#" + [field.id, month].join("/");
     });
 // Populate its options with the fields available
 fieldSelect.selectAll("option")
@@ -130,20 +107,20 @@ fieldSelect.selectAll("option")
     .attr("value", function(d) { return d.id; })
     .text(function(d) { return d.name; });
 
-// Define the dropdown to select a year.
-var yearSelect = d3.select("#year");
+// Define the dropdown to select a month.
+var monthSelect = d3.select("#year");
 
 // D3's "change" event is somehow not triggered when selecting the
 // dropdown value programmatically. Use jQuery's change event instead.
 $('#year').on("change", function(e) {
   // On change, update the URL hash
-  year = years[this.selectedIndex];
-  location.hash = "#" + [field.id, year].join("/");
+  month = months[this.selectedIndex];
+  location.hash = "#" + [field.id, month].join("/");
 });
 
-// Populate its options with the years available
-yearSelect.selectAll("option")
-    .data(years)
+// Populate its options with the months available
+monthSelect.selectAll("option")
+    .data(months)
     .enter()
     .append("option")
     .attr("value", function(y) { return y; })
@@ -177,7 +154,7 @@ function stop_play() {
 
 /**
  * Recursive function to loop infinitively through the fields in the
- * year dropdown.
+ * month dropdown.
  *
  * Caution: This function has no exit, it does not stop by itself!
  */
@@ -193,7 +170,7 @@ function play_inner() {
   });
   outerIsPlaying = setTimeout(function() {
     play_inner();
-  }, years.length * 2000);
+  }, months.length * 2000);
 }
 
 // Add a listener to the change of the URL hash
@@ -235,9 +212,6 @@ function init() {
       path = d3.geo.path()
           .projection(proj);
 
-  console.log(features);
-  console.log(geometries);
-
   // Determine extent of the topology
   var b = topology.bbox;
   t = [(b[0]+b[2])/2, (b[1]+b[3])/2];
@@ -277,10 +251,6 @@ function init() {
  * Reset the cartogram and show the features without scaling.
  */
 function reset() {
-
-  // Reset the calculation statistics text
-  stat.text("");
-
   // Create the cartogram features (without any scaling)
   var cartoFeatures = carto.features(topology, geometries),
       path = d3.geo.path()
@@ -297,11 +267,32 @@ function reset() {
 
 function update() {
 
-  // Keep track of the time it takes to calculate the cartogram
-  var start = Date.now();
-
   // Update the current key
-  currentKey = field.key.replace("%d", year);
+  currentKey = field.key.replace("%d", month);
+
+  // display Tweets
+  d3.json("static/twitter.json", function(twitter) {
+    twitter = twitter.filter(tweet => tweet.coordinates);
+    // console.log(new Date(twitter[0].created_at).getDate())
+    twitter = twitter.filter(tweet => new Date(tweet.created_at).getMinutes() === parseInt(currentKey))
+    console.log(twitter)
+    map 
+        .selectAll("myCircles")
+        .remove();
+
+    map
+        .selectAll("myCircles")
+        .data(twitter)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d){ return proj(d.coordinates.coordinates)[0] })
+        .attr("cy", function(d){ return proj(d.coordinates.coordinates)[1] })
+        .attr("r", 14)
+        .style("fill", "69b3a2")
+        .attr("stroke", "#69b3a2")
+        .attr("stroke-width", 3)
+        .attr("fill-opacity", .4);
+  });
 
   // Prepare the values and determine minimum and maximum values
   var value = function(d) {
@@ -334,7 +325,6 @@ function update() {
   });
 
   // Generate the new features and add them to the map
-  console.log(topology)
   var cartoFeatures = carto(topology, geometries).features;
   mapFeatures.data(cartoFeatures);
 
@@ -347,9 +337,6 @@ function update() {
       })
       .attr("d", carto.path);
 
-  // Show the calculation statistics and hide the update indicator
-  var delta = (Date.now() - start) / 1000;
-  stat.text(["calculated in", delta.toFixed(1), "seconds"].join(" "));
   hideUpdateIndicator();
 }
 
@@ -361,9 +348,7 @@ function update() {
 var deferredUpdate = (function() {
   var timeout;
   return function() {
-    var args = arguments;
     clearTimeout(timeout);
-    stat.text("calculating...");
     return timeout = setTimeout(function() {
       update.apply(null, arguments);
     }, 10);
@@ -377,48 +362,48 @@ var deferredUpdate = (function() {
  */
 function parseHash() {
 
-  // Extract the field and year from the URL hash
+  // Extract the field and month from the URL hash
   var parts = location.hash.substr(1).split("/"),
       desiredFieldId = parts[0],
-      desiredYear = +parts[1];
+      desiredmonth = +parts[1];
 
-  // Make sure field and year are valid, else use the defaults
+  // Make sure field and month are valid, else use the defaults
   field = fieldsById[desiredFieldId] || fields[0];
-  year = (years.indexOf(desiredYear) > -1) ? desiredYear : years[0];
+  month = (months.indexOf(desiredmonth) > -1) ? desiredmonth : months[0];
 
   // Mark the field as selected in the dropdown
   fieldSelect.property("selectedIndex", fields.indexOf(field));
 
   if (field.id === "none") {
-    // If no scale is used, disable the year dropdown and the play
+    // If no scale is used, disable the month dropdown and the play
     // button
-    yearSelect.attr("disabled", "disabled");
+    monthSelect.attr("disabled", "disabled");
     playButton.prop('disabled', true);
     reset();
   } else {
     if (!isPlaying) {
       playButton.prop('disabled', false);
     }
-    // If year is selected, mark it as selected in the dropdown
-    if (field.years) {
-      if (field.years.indexOf(year) === -1) {
-        year = field.years[0];
+    // If month is selected, mark it as selected in the dropdown
+    if (field.months) {
+      if (field.months.indexOf(month) === -1) {
+        month = field.months[0];
       }
-      yearSelect.selectAll("option")
+      monthSelect.selectAll("option")
           .attr("disabled", function(y) {
-            return (field.years.indexOf(y) === -1) ? "disabled" : null;
+            return (field.months.indexOf(y) === -1) ? "disabled" : null;
           });
     } else {
-      yearSelect.selectAll("option")
+      monthSelect.selectAll("option")
           .attr("disabled", null);
     }
 
-    yearSelect
-        .property("selectedIndex", years.indexOf(year))
+    monthSelect
+        .property("selectedIndex", months.indexOf(month))
         .attr("disabled", null);
 
     deferredUpdate();
-    location.replace("#" + [field.id, year].join("/"));
+    location.replace("#" + [field.id, month].join("/"));
   }
 }
 
@@ -452,7 +437,7 @@ function showTooltip(d, i) {
       .attr("style", "left:"+left+"px;top:"+top+"px")
       .html([
         '<strong>', getName(d), '</strong><br/>',
-        'Population: ', formatNumber(getValue(d)),
+        'Tweets: ', formatNumber(getValue(d)),
       ].join(''));
 }
 
@@ -520,7 +505,7 @@ function getName(f) {
   if (f.properties) {
     return f.properties.Name;
   } else {
-    return "default";
+    return "Tweet";
   }
 }
 
