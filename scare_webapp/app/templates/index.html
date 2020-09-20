@@ -8,7 +8,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }} ">
     <style type="text/css" href="{{ url_for('static', filename='style.css') }} ">
-    
+
     body.updating {
         cursor: wait;
     }
@@ -82,27 +82,28 @@
             <div class="column">
                 <div> <img src="{{ url_for('static', filename='logo.svg') }} ">  </div>
                 <h1 style="text-align: center;">Tweets in Switzerland</h1>
-                <div id="description" class="description">Explore the Swiss Twitter landscape!<br>
-                    Enter specific keyword(s) seperated by commas to filter for related tweets.<br>
-                    Change the slider to see the daily tweets.
+                <div id="description" class="description">
+                    <h5>Explore the Swiss Twitter landscape!</h5>
+                    <h5>Enter specific keyword(s) seperated by commas to filter for related tweets.</h5>
+                    <h5>Change the slider to see the daily tweets.</h5>
                 </div>
                 <form id="keywordForm" class="keyword-form">
                     <div class="row">
                         <div class="small-1 columns">
-                            <label for="keywords" class="inline"><b>Keywords</b></label>
+                            <label for="keywords" class="inline"><h4>Keywords</h4></label>
                         </div>
-                        <div class="small-11 columns">
+                        <div class="small-10 columns">
                             <input id="keywords" type="text" placeholder="corona, virus, infection">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="small-1 columns">
-                            <label for="day" class="inline"><b>Day</b></label>
+                            <label for="day" class="inline"><h4>Day</h4></label>
                         </div>
-                        <div class="small-11 columns">
-                            <input type="range" id="day" min="10" max="19" oninput="num.value = this.value + ' Sep 2020'">
-                            <output id="num"></output>
+                        <div class="small-10 columns">
+                            <input type="range" id="day" min="11" max="19">
+                            <output id="date"></output>
                         </div>
                     </div>
                 </form>
