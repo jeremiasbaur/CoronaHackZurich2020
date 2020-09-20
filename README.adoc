@@ -5,7 +5,7 @@ image::logo.svg[Logo, 552, 192]
 
 == Inspiration
 To find out how the society feels at a certain moment in time is of great interest for many - from policy makers that want to support their people where it matters over social entrepreneurs that want to improve the welfare of the society to reporters that want to cover the most important topics and have a positive impact.
-But the usual sources of this emontional data often suffer from being highly biased - it only covers a subset of groups within the society, not at the society as a whole.
+But the usual sources of this emotional data often suffer from being highly biased - it only covers a subset of groups within the society, not at the society as a whole.
 
 The topics that concern society the most and the impact of these topics on people's emotions are often found out from singular and limited sources like the frequency of certain Hashtags on Twitter in a certain timespan.
 These data streams are typically dominated by technological knowledgeable, educated, adult men and women.
@@ -108,13 +108,27 @@ Add more data sources to the pipeline - for example Swisscom and YouTube as disc
 
 == Build with
 
-Time, sweath and computers
+Time, sweat and computers
 
 == Setup
 
 ```bash
 git clone https://github.com/jeremiasbaur/CoronaHackZurich2020
 cd CoronaHackZurich2020/scare_webapp
+python -m venv virtualenv
+```
+
+Linux:
+```bash
+source virtualenv/bin/activate
+```
+
+Windows:
+```bash
+virtualenv\Scripts\activate
+```
+
+```bash
 pip install -r requirements.txt
 flask run
 ```
