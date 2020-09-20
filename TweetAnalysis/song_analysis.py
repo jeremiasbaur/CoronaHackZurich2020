@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from matplotlib import pyplot as plt
 
-api_key = os.environ["MIXER_KEY"]
+api_key = None #os.environ["MIXER_KEY"]
 
 if __name__=='__main__':
     songs = {}
@@ -96,32 +96,42 @@ if __name__=='__main__':
         with open("song_sentiment.json","w") as f:
             f.write(json.dumps(songs))
 
-    song_data=None
-    with open("TweetAnalysis/song_sentiment.json") as f:
-        song_data=json.loads(f.read())
+    if False:
+        song_data=None
+        with open("TweetAnalysis/song_sentiment.json") as f:
+            song_data=json.loads(f.read())
+        
+        chart_data={}
+        with open('Spotify/Latest_CH.csv', encoding="utf8") as f:
+            reader = csv.reader(f, delimiter=',')
+            next(reader)
+
+            for line in reader:
+                date = datetime.strptime(line[-1], "%Y-%m-%d")
+                
+                if len(song_data[line[5]])<3: continue
+                if date in chart_data:
+                    chart_data[date].append(song_data[line[5]][2])
+                else:
+                    chart_data[date] = [song_data[line[5]][2]]
+
+
+        chart = []
+        for k, v in chart_data.items():
+            print(k, sum(v)/len(v))
+            chart.append((sum(v)/len(v), k.__str__()))
+        
+        with open('TweetAnalysis/chart_sentiment.json', 'w') as f:
+            f.write(json.dumps(chart))
+
+        plt.plot([i[1] for i in chart], [i[0] for i in chart])
+        plt.show()
     
-    chart_data={}
-    with open('Spotify/Latest_CH.csv', encoding="utf8") as f:
-        reader = csv.reader(f, delimiter=',')
-        next(reader)
+    if True:
+        song_data=None
+        with open("TweetAnalysis/song_sentiment.json") as f:
+            song_data=json.loads(f.read())
 
-        for line in reader:
-            date = datetime.strptime(line[-1], "%Y-%m-%d")
-            
-            if len(song_data[line[5]])<3: continue
-            if date in chart_data:
-                chart_data[date].append(song_data[line[5]][2])
-            else:
-                chart_data[date] = [song_data[line[5]][2]]
+        s = sorted(song_data.items(), key=lambda x: x[2] if len(x)>3 else continue)
 
-
-    chart = []
-    for k, v in chart_data.items():
-        print(k, sum(v)/len(v))
-        chart.append((sum(v)/len(v), k.__str__()))
-    
-    with open('TweetAnalysis/chart_sentiment.json', 'w') as f:
-        f.write(json.dumps(chart))
-
-    plt.plot([i[1] for i in chart], [i[0] for i in chart])
-    plt.show()
+        print(s)
