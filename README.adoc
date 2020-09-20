@@ -118,19 +118,15 @@ cd CoronaHackZurich2020/scare_webapp
 python -m venv virtualenv
 ```
 
-Linux:
-```bash
-source virtualenv/bin/activate
-```
+Linux: `source virtualenv/bin/activate`
 
-Windows:
-```bash
-virtualenv\Scripts\activate
-```
+Windows: `virtualenv\Scripts\activate`
 
 ```bash
 pip install -r requirements.txt
 flask run
 ```
+
+Download https://schuelerzahlen-zuerich.opendata.iwi.unibe.ch/App2/d3geo-2/data/ch_cantons.topojson[ch_cantons.topojson] into `app/static`.
 
 Now go to http://localhost:5000 and you are good to go!
