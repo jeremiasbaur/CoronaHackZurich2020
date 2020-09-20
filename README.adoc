@@ -114,9 +114,9 @@ Time, sweath and computers
 
 ```bash
 git clone https://github.com/jeremiasbaur/CoronaHackZurich2020
-cd CoronaHackZurich2020
+cd CoronaHackZurich2020/scare_webapp
 pip install -r requirements.txt
 flask run
 ```
 
-Now go to localhost:5000 and you are good to go!
+Now go to http://localhost:5000 and you are good to go!
