@@ -9,7 +9,7 @@ if (!document.createElementNS) {
 }
 
 var form = document.forms["keywordForm"]
-function handleForm(event) { event.preventDefault(); } 
+function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
 
 // Define the colors with colorbrewer
@@ -116,10 +116,18 @@ d3.json("static/cleaned_tweets_en.json", function(t1) {
   tweets.push(...t1);
   d3.json("static/cleaned_tweets_de.json", function(t2) {
     tweets.push(...t2);
+    update();
   })
 });
 
-update();
+
+function computeSentimentColor(sentiment) {
+  if (sentiment > 0) {
+    return "rgb(" + (1 - sentiment) * 255 + ", 255 , 0)";
+  } else {
+    return "rgb(255, " + (1 + sentiment) * 255 + ", 0)";
+  }
+}
 
 function update() {
   // display Tweets
@@ -127,14 +135,6 @@ function update() {
   if (keywords !== "") {
     const keywordArray = keywords.split(',').filter(keyword => keyword !== "");
     filteredTweets = filteredTweets.filter(tweet => keywordArray.some(keyword => tweet.text.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
-  }
-
-  function computeSentimentColor(sentiment) {
-    if (sentiment > 0) {
-      return "rgb(" + (1 - sentiment) * 255 + ", 255 , 0)";
-    } else {
-      return "rgb(255, " + (1 + sentiment) * 255 + ", 0)";
-    }
   }
 
   map.selectAll("circle")
