@@ -58,20 +58,33 @@
         text-align: right;
     }
 
+    .description {
+        margin:10px;
+        text-align: center;
+    }
+
+    .keyword-form {
+        margin-bottom: 10px;
+    }
+
     </style>
 </head>
 <body>
     <div id="container">
         <div class="row">
             <div class="column">
-                <h1>Tweets in Switzerland</h1>
-                <form id="keywordForm">
+                <h1 style="text-align: center;">Tweets in Switzerland</h1>
+                <div id="description" class="description">Explore the Swiss Twitter landscape!<br>
+                    Enter specific keyword(s) seperated by commas to filter for related tweets.<br>
+                    Change the slider to see the daily tweets.
+                </div>
+                <form id="keywordForm" class="keyword-form">
                     <div class="row">
                         <div class="small-1 columns">
                             <label for="keywords" class="inline"><b>Keywords</b></label>
                         </div>
                         <div class="small-11 columns">
-                            <input id="keywords" type="text">
+                            <input id="keywords" type="text" placeholder="corona, virus, infection">
                         </div>
                     </div>
 
