@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation-float.min.css" integrity="sha256-4ldVyEvC86/kae2IBWw+eJrTiwNEbUUTmN0zkP4luL4=" crossorigin="anonymous">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
     <style type="text/css">
-
+    
     body.updating {
         cursor: wait;
     }
@@ -67,6 +69,11 @@
         margin-bottom: 10px;
     }
 
+    .spotfiy{
+        margin: 20px auto;
+        align-content: center;
+    }
+
     </style>
 </head>
 <body>
@@ -106,7 +113,14 @@
                     <svg id="map"></svg>
                 </div>
             </div>
-        </div>
+        </div><br>
+            <h2 style="text-align: center;">Swiss Top 200 Music Charts</h2>
+            <div id="tester" class="spotfiy">
+                <iframe style="display: block; margin:auto;" width="80%" height="500" src="https://chart-studio.plotly.com/~gerwolf/192.embed?share_key=GRPcCTx1qfFekURVTPK4AI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div>
+                </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/colorbrewer@1.3.0/index.min.js"></script>
@@ -117,6 +131,7 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
             crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='map.js') }}" type="text/javascript"></script> <!--  density_data="{{ density_data }}" -->
+    <script src="{{ url_for('static', filename='spotify_plot.js') }}" type="text/javascript"></script> <!--  density_data="{{ density_data }}" -->
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 </body>
