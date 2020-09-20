@@ -109,3 +109,14 @@ Add more data sources to the pipeline - for example Swisscom and YouTube as disc
 == Build with
 
 Time, sweath and computers
+
+== Setup
+
+```bash
+git clone https://github.com/jeremiasbaur/CoronaHackZurich2020
+cd CoronaHackZurich2020
+pip install -r requirements.txt
+flask run
+```
+
+Now go to localhost:5000 and you are good to go!
