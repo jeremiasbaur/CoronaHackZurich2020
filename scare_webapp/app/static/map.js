@@ -44,7 +44,7 @@ var topology,
     carto = d3.cartogram()
         .projection(proj);
 
-var day = 10,
+var day = 11,
     tweets = [],
     keywords = "";
 
@@ -163,6 +163,9 @@ function update() {
   // position when moving the cursor inside the feature.
   bubbles.on('mousemove', showTooltip)
       .on('mouseout', hideTooltip);
+
+  // display date
+  $('#date').html(day + ' Sep 2020: ' + filteredTweets.length + ' tweets');
 }
 
 /**
